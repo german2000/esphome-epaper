@@ -1,0 +1,397 @@
+esphome:
+  name: esphome-web-0c2bc4
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+
+
+wifi:
+  ssid: "KBHG"
+  password: "KBHG8888"
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Esphome-Web-0C2Bc4"
+    password: "cHYOyN4nAXed"
+
+captive_portal:
+
+
+substitutions:
+  icon_xy: '120x120'
+
+time:
+  - platform: homeassistant
+    id: esptime
+
+spi:
+  clk_pin: 13
+  mosi_pin: 14
+
+#三色驱动
+external_components:
+  - source:
+      type: git
+      url: https://github.com/parats15/esphome.git
+      ref: waveshare-color_fixTest
+    components: [ waveshare_epaper ]
+
+color:
+  - id: COLOR_RED
+    red: 100%
+    green: 0%
+    blue: 0%
+    white: 0%
+
+
+image:
+  - file: "images/0-default.png"
+    id: wpng_0
+    type: BINARY
+    resize: ${icon_xy}
+  - file: "images/1-clear-night.bmp"
+    id: wpng_1
+    type: BINARY
+    resize: ${icon_xy}
+  - file: "images/2-cloudy.bmp"
+    id: wpng_2
+    type: BINARY
+    resize: ${icon_xy}
+  - file: "images/3-fog.bmp"
+    id: wpng_3
+    type: BINARY
+    resize: ${icon_xy}
+  - file: "images/4-hail.bmp"
+    id: wpng_4
+    type: BINARY
+    resize: ${icon_xy}
+  - file: "images/5-lightning.bmp"
+    id: wpng_5
+    type: BINARY
+    resize: ${icon_xy}
+  - file: "images/6-lightning-rainy.bmp"
+    id: wpng_6
+    type: BINARY
+    resize: ${icon_xy}
+  - file: "images/7-partlycloudy.bmp"
+    id: wpng_7
+    type: BINARY
+    resize: ${icon_xy}
+  - file: "images/8-pouring.bmp"
+    id: wpng_8
+    type: BINARY
+    resize: ${icon_xy}
+  - file: "images/9-rainy.bmp"
+    id: wpng_9
+    type: BINARY
+    resize: ${icon_xy}
+  - file: "images/10-snowy.bmp"
+    id: wpng_10
+    type: BINARY
+    resize: ${icon_xy}
+  - file: "images/11-snowy-rainy.bmp"
+    id: wpng_11
+    type: BINARY
+    resize: ${icon_xy}
+  - file: "images/12-sunny.bmp"
+    id: wpng_12
+    type: BINARY
+    resize: ${icon_xy}
+  - file: "images/13-windy.bmp"
+    id: wpng_13
+    type: BINARY
+    resize: ${icon_xy}
+  - file: "images/14-windy-variant.bmp"
+    id: wpng_14
+    type: BINARY
+    resize: ${icon_xy}
+  - file: "images/15-exceptional.bmp"
+    id: wpng_15
+    type: BINARY
+    resize: ${icon_xy}
+
+font:
+  - file: 'fonts/materialdesignicons-webfont.ttf'
+    id: sensor_font
+    size: 24
+    glyphs:
+      - "\U000F050F" # Temperature
+      - "\U000F058E" # Humidity
+  - file: 'fonts/Arial-Black.ttf'
+    id: dayshow
+    size: 100
+  - file: 'fonts/Arial-Black.ttf'
+    id: timeshow
+    size: 80
+  - file: 'fonts/fzpszhjw.ttf'
+    id: cfont1
+    size: 24
+    glyphs: 环境户空气质量指数大厅优良轻中严重污染夜阴雾冰雹雷电雨多云暴雪晴风龙卷例外无房室阅览更衣机动舞蹈绘画北京时间星期周日温度湿年月一二三四五六七八九十℃％!"%()+=,-_.:°0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz
+  - file: 'fonts/fzpszhjw.ttf'
+    id: cfont2
+    size: 20
+    glyphs: 环境户空气质量指数大厅优良轻中严重污染夜阴雾冰雹雷电雨多云暴雪晴风龙卷例外无房室阅览更衣机动舞蹈绘画北京时间星期周日温度湿年月一二三四五六七八九十℃％!"%()+=,-_.:°0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz
+  - file: 'fonts/arial.ttf'
+    id: dtshow
+    size: 18
+    glyphs: +=,-_.:°%/0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz"!
+sensor:
+  #户外气象
+  - platform: homeassistant
+    id: hwtemp
+    entity_id: weather.home
+    attribute: temperature
+  - platform: homeassistant
+    id: hwhumi
+    entity_id: weather.home
+    attribute: humidity
+
+  #阅览室
+  - platform: homeassistant
+    id: ylstemp
+    entity_id: sensor.atc_ed3d_temperature
+  - platform: homeassistant
+    id: ylshumi
+    entity_id: sensor.atc_ed3d_humidity
+  
+  #更衣室
+  - platform: homeassistant
+    id: gystemp
+    entity_id: sensor.sonoff_a40000d610_temperature
+  - platform: homeassistant
+    id: gyshumi
+    entity_id: sensor.sonoff_a40000d610_humidity
+  
+  #机动室
+  - platform: homeassistant
+    id: jdstemp
+    entity_id: sensor.sonoff_a40000d613_temperature
+  - platform: homeassistant
+    id: jdshumi
+    entity_id: sensor.sonoff_a40000d613_humidity
+
+  #舞蹈房
+  - platform: homeassistant
+    id: wdftemp
+    entity_id: sensor.sonoff_a40000d56f_temperature
+  - platform: homeassistant
+    id: wdfhumi
+    entity_id: sensor.sonoff_a40000d56f_humidity
+
+  #绘画二
+  - platform: homeassistant
+    id: hhetemp
+    entity_id: sensor.sonoff_a40000d612_temperature
+  - platform: homeassistant
+    id: hhehumi
+    entity_id: sensor.sonoff_a40000d612_humidity
+  
+  #绘画三
+  - platform: homeassistant
+    id: hhstemp
+    entity_id: sensor.sonoff_a40000d611_temperature
+  - platform: homeassistant
+    id: hhshumi
+    entity_id: sensor.sonoff_a40000d611_humidity
+  
+  #大厅
+  - platform: homeassistant
+    id: dtal
+    entity_id:  sensor.airquality_level_2
+  - platform: homeassistant
+    id: dtco2
+    entity_id: sensor.co2_2
+  - platform: homeassistant
+    id: dthcho
+    entity_id: sensor.hcho_2
+  - platform: homeassistant
+    id: dttvoc
+    entity_id:  sensor.tvoc_2
+  - platform: homeassistant
+    id: dttemp
+    entity_id: sensor.atc_05ee_temperature
+  - platform: homeassistant
+    id: dthumi
+    entity_id: sensor.atc_05ee_humidity
+
+text_sensor:
+  #天气
+  - platform: homeassistant
+    id: weather
+    entity_id: weather.home
+    
+  
+  
+
+
+display:
+    
+  - platform: waveshare_epaper
+    cs_pin: 15
+    dc_pin: 27
+    busy_pin: 25
+    reset_pin: 26
+    model: 7.50in
+    update_interval: 180s
+
+    
+
+    lambda: |- 
+
+     //画框框
+      it.filled_rectangle(480, 0, 160, 155, COLOR_RED);
+      it.filled_rectangle(0, 155, 640, 2, COLOR_RED);
+      it.line(165, 155, 165, 384, COLOR_RED);
+      it.line(245, 155, 245, 384);
+      it.line(325, 155, 325, 384);
+      it.line(402, 155, 402, 384);
+      it.line(482, 155, 482, 384);
+      it.line(561, 155, 561, 384);
+      it.line(639, 155, 639, 384);
+      it.line(165, 195, 639, 195, COLOR_RED);
+      it.line(165, 290, 639, 290); 
+      it.line(0, 383, 639, 383);
+
+
+      //天气图例
+      std::map<std::string, Image *> imgDict;
+      imgDict["clear-night"] = id(wpng_1);
+      imgDict["cloudy"] = id(wpng_2);
+      imgDict["fog"] = id(wpng_3);
+      imgDict["hail"] = id(wpng_4);
+      imgDict["lightning"] = id(wpng_5);
+      imgDict["lightning-rainy"] = id(wpng_6);
+      imgDict["partlycloudy"] = id(wpng_7);
+      imgDict["pouring"] = id(wpng_8);
+      imgDict["rainy"] = id(wpng_9);
+      imgDict["snowy"] = id(wpng_10);
+      imgDict["snowy-rainy"] = id(wpng_11);
+      imgDict["sunny"] = id(wpng_12);
+      imgDict["windy"] = id(wpng_13);
+      imgDict["windy-variant"] = id(wpng_14);
+      imgDict["exceptional"] = id(wpng_15);
+      imgDict[""] = id(wpng_0);
+         
+      //天气字例
+      std::map<std::string, const char *> conDict;
+      conDict["clear-night"] = "晴夜";
+      conDict["cloudy"] = "阴";
+      conDict["fog"] = "雾";
+      conDict["hail"] = "冰雹";
+      conDict["lightning"] = "雷电";
+      conDict["lightning-rainy"] = "雷雨";
+      conDict["partlycloudy"] = "多云";
+      conDict["pouring"] = "暴雨";
+      conDict["rainy"] = "雨";
+      conDict["snowy"] = "雪";
+      conDict["snowy-rainy"] = "雨雪";
+      conDict["sunny"] = "晴";
+      conDict["windy"] = "风";
+      conDict["windy-variant"] = "龙卷风";
+      conDict["exceptional"] = "例外";
+      conDict[""] = "无";
+
+      //户外天气
+      it.image(0, 0, imgDict[id(weather).state], COLOR_RED);
+      it.printf(60, 50, id(cfont1), COLOR_ON, TextAlign::TOP_CENTER, "%s", conDict[id(weather).state]);
+      it.printf(40, 115, id(dtshow), COLOR_ON, TextAlign::TOP_LEFT, " %.1f °C", id(hwtemp).state);
+      it.printf(40, 135, id(dtshow), COLOR_ON, TextAlign::TOP_LEFT, " %.0f %%", id(hwhumi).state);
+      it.print(10, 115,  id(sensor_font), COLOR_ON, "\U000F050F");
+      it.print(10, 135, id(sensor_font), COLOR_ON, "\U000F058E");
+
+      //周天计算及打印
+      std::map<int, const char *> dayDict;
+      dayDict[1] = "周日";
+      dayDict[2] = "周一";
+      dayDict[3] = "周二";
+      dayDict[4] = "周三";
+      dayDict[5] = "周四";
+      dayDict[6] = "周五";
+      dayDict[7] = "周六";
+      int day = id(esptime).now().day_of_week;
+      it.printf(560, 10, id(cfont1), COLOR_OFF, TextAlign::TOP_CENTER, "%s", dayDict[day]);
+      //年月日时计算及打印
+      it.strftime(560, 120, id(cfont1), COLOR_OFF, TextAlign::TOP_CENTER, "%Y年%m月", id(esptime).now());
+      it.strftime(560, 0, id(dayshow), COLOR_OFF, TextAlign::TOP_CENTER, "%d", id(esptime).now());
+      it.print(320, 25, id(cfont1), COLOR_ON, TextAlign::TOP_CENTER, "北京时间");
+      it.strftime(320, 30, id(timeshow), COLOR_ON, TextAlign::TOP_CENTER, "%H:%M", id(esptime).now());
+
+      it.print(170, 165, id(cfont1), COLOR_ON, "阅览室 更衣室 机动室 舞蹈房 绘画二 绘画三");
+      //阅览室
+      if ((id(ylstemp).state >= 18)&&(id(ylstemp).state <= 26)) {it.printf(205, 200, id(sensor_font), COLOR_ON, TextAlign::TOP_CENTER, "\U000F050F"); }
+      if ((id(ylstemp).state < 18)||(id(ylstemp).state > 26)) {it.printf(205, 200, id(sensor_font), COLOR_RED, TextAlign::TOP_CENTER, "\U000F050F"); }
+      if ((id(ylshumi).state >= 30)&&(id(ylshumi).state <= 80)) {it.printf(205, 295, id(sensor_font), COLOR_ON, TextAlign::TOP_CENTER, "\U000F058E"); }
+      if ((id(ylshumi).state < 30 )||(id(ylshumi).state >  80)) {it.printf(205, 295, id(sensor_font), COLOR_RED, TextAlign::TOP_CENTER, "\U000F058E"); }
+      it.printf(205, 235, id(dtshow), COLOR_ON, TextAlign::TOP_CENTER, "%.1f °C", id(ylstemp).state);
+      it.printf(205, 330, id(dtshow), COLOR_ON, TextAlign::TOP_CENTER, "%.0f %%", id(ylshumi).state);
+      //更衣室
+      if ((id(gystemp).state >= 18) && (id(gystemp).state <= 26)) {it.printf(285, 200, id(sensor_font), COLOR_ON, TextAlign::TOP_CENTER, "\U000F050F"); }
+      if ((id(gystemp).state <  18) || (id(gystemp).state >  26)) {it.printf(285, 200, id(sensor_font), COLOR_RED, TextAlign::TOP_CENTER, "\U000F050F"); }
+      if ((id(gyshumi).state >= 30) && (id(gyshumi).state <= 80)) {it.printf(285, 295, id(sensor_font), COLOR_ON, TextAlign::TOP_CENTER, "\U000F058E"); }
+      if ((id(gyshumi).state < 30 ) || (id(gyshumi).state >  80)) {it.printf(285, 295, id(sensor_font), COLOR_RED, TextAlign::TOP_CENTER, "\U000F058E"); } 
+      it.printf(285, 235, id(dtshow), COLOR_ON, TextAlign::TOP_CENTER, "%.1f °C", id(gystemp).state);
+      it.printf(285, 330, id(dtshow), COLOR_ON, TextAlign::TOP_CENTER, "%.0f %%", id(gyshumi).state);
+      //机动室
+      if ((id(jdstemp).state >= 18) && (id(jdstemp).state <= 26)) {it.printf(365, 200, id(sensor_font), COLOR_ON, TextAlign::TOP_CENTER, "\U000F050F"); }
+      if ((id(jdstemp).state <  18) || (id(jdstemp).state >  26)) {it.printf(365, 200, id(sensor_font), COLOR_RED, TextAlign::TOP_CENTER, "\U000F050F"); }
+      if ((id(jdshumi).state >= 30) && (id(jdshumi).state <= 80)) {it.printf(365, 295, id(sensor_font), COLOR_ON, TextAlign::TOP_CENTER, "\U000F058E"); }
+      if ((id(jdshumi).state < 30 ) || (id(jdshumi).state >  80)) {it.printf(365, 295, id(sensor_font), COLOR_RED, TextAlign::TOP_CENTER, "\U000F058E"); } 
+      it.printf(365, 235, id(dtshow), COLOR_ON, TextAlign::TOP_CENTER, "%.1f °C", id(jdstemp).state);
+      it.printf(365, 330, id(dtshow), COLOR_ON, TextAlign::TOP_CENTER, "%.0f %%", id(jdshumi).state);
+      //舞蹈房
+      if ((id(wdftemp).state >= 18) && (id(wdftemp).state <= 26)) {it.printf(442, 200, id(sensor_font), COLOR_ON, TextAlign::TOP_CENTER, "\U000F050F"); }
+      if ((id(wdftemp).state <  18) || (id(wdftemp).state >  26)) {it.printf(442, 200, id(sensor_font), COLOR_RED, TextAlign::TOP_CENTER, "\U000F050F"); }
+      if ((id(wdfhumi).state >= 30) && (id(wdfhumi).state <= 80)) {it.printf(442, 295, id(sensor_font), COLOR_ON, TextAlign::TOP_CENTER, "\U000F058E"); }
+      if ((id(wdfhumi).state < 30 ) || (id(wdfhumi).state >  80)) {it.printf(442, 295, id(sensor_font), COLOR_RED, TextAlign::TOP_CENTER, "\U000F058E"); } 
+      it.printf(442, 235, id(dtshow), COLOR_ON, TextAlign::TOP_CENTER, "%.1f °C", id(wdftemp).state);
+      it.printf(442, 330, id(dtshow), COLOR_ON, TextAlign::TOP_CENTER, "%.0f %%", id(wdfhumi).state);
+      //绘画二
+      if ((id(hhetemp).state >= 18) && (id(hhetemp).state <= 26)) {it.printf(522, 200, id(sensor_font), COLOR_ON, TextAlign::TOP_CENTER, "\U000F050F"); }
+      if ((id(hhetemp).state <  18) || (id(hhetemp).state >  26)) {it.printf(522, 200, id(sensor_font), COLOR_RED, TextAlign::TOP_CENTER, "\U000F050F"); }
+      if ((id(hhehumi).state >= 30) && (id(hhehumi).state <= 80)) {it.printf(522, 295, id(sensor_font), COLOR_ON, TextAlign::TOP_CENTER, "\U000F058E"); }
+      if ((id(hhehumi).state < 30 ) || (id(hhehumi).state >  80)) {it.printf(522, 295, id(sensor_font), COLOR_RED, TextAlign::TOP_CENTER, "\U000F058E"); }
+      it.printf(522, 235, id(dtshow), COLOR_ON, TextAlign::TOP_CENTER, "%.1f °C", id(hhetemp).state);
+      it.printf(522, 330, id(dtshow), COLOR_ON, TextAlign::TOP_CENTER, "%.0f %%", id(hhehumi).state);
+      //绘画三
+      if ((id(hhstemp).state >= 18) && (id(hhstemp).state <= 26)) {it.printf(601, 200, id(sensor_font), COLOR_ON, TextAlign::TOP_CENTER, "\U000F050F"); }
+      if ((id(hhstemp).state <  18) || (id(hhstemp).state >  26)) {it.printf(601, 200, id(sensor_font), COLOR_RED, TextAlign::TOP_CENTER, "\U000F050F"); }
+      if ((id(hhshumi).state >= 30) && (id(hhshumi).state <= 81)) {it.printf(601, 295, id(sensor_font), COLOR_ON, TextAlign::TOP_CENTER, "\U000F058E"); }      
+      if ((id(hhshumi).state < 30 ) || (id(hhshumi).state >  80)) {it.printf(601, 295, id(sensor_font), COLOR_RED, TextAlign::TOP_CENTER, "\U000F058E"); }      
+      
+      it.printf(601, 235, id(dtshow), COLOR_ON, TextAlign::TOP_CENTER, "%.1f °C", id(hhstemp).state);
+      it.printf(601, 330, id(dtshow), COLOR_ON, TextAlign::TOP_CENTER, "%.0f %%", id(hhshumi).state);
+      //大厅
+      it.print(82, 170, id(cfont1), COLOR_ON, TextAlign::TOP_CENTER, "大厅环境指数");
+      it.line(10, 200, 150, 200, COLOR_RED);
+      it.line(10, 202, 150, 202, COLOR_RED);
+      it.printf(82, 220, id(dtshow), COLOR_ON, TextAlign::TOP_CENTER, "AirQuality: %.0f", id(dtal).state);
+      it.printf(82, 240, id(dtshow), COLOR_ON, TextAlign::TOP_CENTER, "CO2: %.1f ppm", id(dtco2).state);
+      it.printf(82, 260, id(dtshow), COLOR_ON, TextAlign::TOP_CENTER, "HCHO: %.1f mg/m3 ", id(dthcho).state);
+      it.printf(82, 280, id(dtshow), COLOR_ON, TextAlign::TOP_CENTER, "TVOC: %.1f mg/m3", id(dttvoc).state);
+      if ((id(dttemp).state >=18) && (id(dttemp).state <= 26)) { it.printf(35, 300, id(sensor_font), COLOR_ON, TextAlign::TOP_LEFT, "\U000F050F"); }
+      if ((id(dttemp).state < 18) || (id(dttemp).state >  26)) { it.printf(35, 300, id(sensor_font), COLOR_RED, TextAlign::TOP_LEFT, "\U000F050F"); }
+      it.printf(60, 300, id(dtshow), COLOR_ON, TextAlign::TOP_LEFT, "%.1f °C", id(dttemp).state);
+      if ((id(dthumi).state >= 30) && (id(dthumi).state <= 80)) { it.printf(35, 320, id(sensor_font), COLOR_ON, TextAlign::TOP_LEFT, "\U000F058E"); }
+      if ((id(dthumi).state < 30) || (id(dthumi).state > 80)) { it.printf(35, 320, id(sensor_font), COLOR_RED, TextAlign::TOP_LEFT, "\U000F058E"); }
+      it.printf(60, 320, id(dtshow), COLOR_ON, TextAlign::TOP_LEFT, "%.0f %%" , id(dthumi).state);
+
+      //空气质量计算
+      std::string airq = "优";
+      int airal = id(dtal).state;
+      if (airal > 50) { airq == "良"; }
+      if (airal > 100) { airq == "轻度污染"; }
+      if (airal > 150) { airq == "中度污染"; }
+      if (airal > 200) { airq == "重度污染"; }
+      if (airal > 300) { airq == "严重污染"; }
+      it.printf(80, 350, id(cfont2), COLOR_RED, TextAlign::TOP_CENTER, "空气质量:%s", airq.c_str());
+      
